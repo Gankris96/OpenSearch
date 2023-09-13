@@ -556,7 +556,7 @@ public class ThreadPool implements ReportingService<ThreadPoolInfo>, Scheduler {
     }
 
     public static int searchThreadPoolSize(final int allocatedProcessors) {
-        return ((allocatedProcessors * 3) / 2) + 1;
+        return allocatedProcessors;
     }
 
     class LoggingRunnable implements Runnable {
