@@ -82,6 +82,7 @@ public class MetadataFetchingIT extends ParameterizedOpenSearchIntegTestCase {
 
         client().prepareIndex("test").setId("1").setSource("field", "value").get();
         refresh();
+        indexRandomForConcurrentSearch("test");
 
         SearchResponse response = client().prepareSearch("test").storedFields("_none_").setFetchSource(false).setVersion(true).get();
         assertThat(response.getHits().getAt(0).getId(), nullValue());
@@ -98,7 +99,7 @@ public class MetadataFetchingIT extends ParameterizedOpenSearchIntegTestCase {
         ensureGreen();
         client().prepareIndex("test").setId("1").setSource("field", "value", "nested", Collections.singletonMap("title", "foo")).get();
         refresh();
-
+        indexRandomForConcurrentSearch("test");
         SearchResponse response = client().prepareSearch("test")
             .storedFields("_none_")
             .setFetchSource(false)
@@ -125,6 +126,7 @@ public class MetadataFetchingIT extends ParameterizedOpenSearchIntegTestCase {
 
         client().prepareIndex("test").setId("1").setSource("field", "value").setRouting("toto").get();
         refresh();
+        indexRandomForConcurrentSearch("test");
 
         SearchResponse response = client().prepareSearch("test").storedFields("_none_").setFetchSource(false).get();
         assertThat(response.getHits().getAt(0).getId(), nullValue());

@@ -620,6 +620,7 @@ public class GeoDistanceIT extends ParameterizedOpenSearchIntegTestCase {
         assertAcked(prepareCreate("locations").setSettings(settings).setMapping(mapping));
         client().prepareIndex("locations").setId("1").setCreate(true).setSource(source).get();
         refresh();
+        indexRandomForConcurrentSearch("locations");
         client().prepareGet("locations", "1").get();
 
         SearchResponse result = client().prepareSearch("locations")

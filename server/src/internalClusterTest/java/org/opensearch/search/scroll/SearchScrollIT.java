@@ -746,6 +746,7 @@ public class SearchScrollIT extends ParameterizedOpenSearchIntegTestCase {
         client().prepareIndex("test").setId("2").setSource("created_date", "2020-01-02").get();
         client().prepareIndex("test").setId("3").setSource("created_date", "2020-01-03").get();
         client().admin().indices().prepareRefresh("test").get();
+        indexRandomForConcurrentSearch(3, "test");
         SearchResponse resp = null;
         try {
             int totalHits = 0;
