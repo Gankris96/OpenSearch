@@ -86,6 +86,8 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static org.opensearch.search.SearchService.CONCURRENT_SEGMENT_SEARCH_MODE_NONE;
+
 /**
  * This class encapsulates the state needed to execute a search. It holds a reference to the
  * shards point in time snapshot (IndexReader / ContextIndexSearcher) and allows passing on
@@ -430,6 +432,18 @@ public abstract class SearchContext implements Releasable {
      * Returns concurrent segment search status for the search context
      */
     public boolean shouldUseConcurrentSearch() {
+        return false;
+    }
+
+    /**
+     *
+     * Returns the concurrent segment search mode
+     */
+    public String getConcurrentSearchMode() {
+        return CONCURRENT_SEGMENT_SEARCH_MODE_NONE;
+    }
+
+    public boolean canEnableConcurrentSearch() {
         return false;
     }
 

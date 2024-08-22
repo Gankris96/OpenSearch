@@ -64,6 +64,7 @@ import org.opensearch.search.aggregations.pipeline.MovAvgModel;
 import org.opensearch.search.aggregations.pipeline.MovAvgPipelineAggregator;
 import org.opensearch.search.aggregations.pipeline.PipelineAggregator;
 import org.opensearch.search.aggregations.support.ValuesSourceRegistry;
+import org.opensearch.search.deciders.ConcurrentSearchDecider;
 import org.opensearch.search.fetch.FetchSubPhase;
 import org.opensearch.search.fetch.subphase.highlight.Highlighter;
 import org.opensearch.search.query.QueryPhaseSearcher;
@@ -77,6 +78,8 @@ import org.opensearch.search.suggest.SuggestionBuilder;
 import org.opensearch.threadpool.ThreadPool;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -136,6 +139,14 @@ public interface SearchPlugin {
      */
     default Map<String, Highlighter> getHighlighters() {
         return emptyMap();
+    }
+
+    /**
+     * Allows plugins to create concurrent search deciders
+     * @return Collection or ConcurrentSearchDeciders
+     */
+    default Collection<ConcurrentSearchDecider> createConcurrentSearchDeciders() {
+        return Collections.emptyList();
     }
 
     /**
